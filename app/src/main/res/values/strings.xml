@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TessieDesign</string>
+
+    <string-array name="tipos">
+        <item>Blanco</item>
+        <item>Transparente</item>
+    </string-array>
+</resources>
