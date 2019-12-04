@@ -7,11 +7,17 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="702dp"
+        android:id="@+id/logo"
+        android:layout_width="720dp"
         android:layout_height="350dp"
-        tools:layout_editor_absoluteX="235dp"
-        tools:layout_editor_absoluteY="31dp"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="198dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/tessie" />
 
     <Button
