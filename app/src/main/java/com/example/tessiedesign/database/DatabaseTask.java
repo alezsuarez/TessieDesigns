@@ -11,7 +11,7 @@ import java.util.List;
 
 
 
-public class DatabaseTask extends AsyncTask<Request, Void, List<Request>> {
+public class DatabaseTask extends AsyncTask<Void, Void, List<Request>> {
     private  ICallbackReceiverDB receiverCallback;
     private Context context;
     private TessieDesignDB db;
@@ -20,13 +20,13 @@ public class DatabaseTask extends AsyncTask<Request, Void, List<Request>> {
         this.context = ctx;
         this.receiverCallback = receiverCallback;
         //Database Creation
-        db = Room.databaseBuilder(context, TessieDesignDB.class, "StickerOrdersDB").build();
+        db = Room.databaseBuilder(context, TessieDesignDB.class, "TessieDesignDB").build();
 
     }
 
     @Override
-    protected List<Request> doInBackground(Request... requests) {
-        return null;
+    protected List<Request> doInBackground(Void... voids) {
+        return db.requestDAO().consultRequests();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class DatabaseTask extends AsyncTask<Request, Void, List<Request>> {
     }
 
     public interface ICallbackReceiverDB {
-        public void getAllRequests(List<Request> requestList);
+        void getAllRequests(List<Request> requestList);
     }
 }
 

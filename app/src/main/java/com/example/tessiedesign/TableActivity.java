@@ -27,7 +27,7 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
             ,tfImage1, tfImage2, tfImage3, tfImage4, tfImage5, tfImage6, tfImage7, tfImage8;
 
     private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8;
-    private Button btnRegister;
+    private Button btnRegister, btnViewData;
     private RadioGroup rg1,rg2,rg3,rg4,rg5,rg6,rg7,rg8;
     private RadioButton rb1_1, rb1_2, rb2_1, rb2_2, rb3_1, rb3_2, rb4_1,
             rb4_2, rb5_1, rb5_2, rb6_1, rb6_2, rb7_1, rb7_2, rb8_1, rb8_2;
@@ -102,9 +102,10 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
         tfImage8 = findViewById(R.id.et_image8);
 
         btnRegister = findViewById(R.id.btnRegister);
-
+        btnViewData = findViewById(R.id.btnViewData);
 
         btnRegister.setOnClickListener(this);
+        btnViewData.setOnClickListener(this);
 
     }
 
@@ -113,27 +114,43 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
     @Override
     public void getAllRequests(List<Request> requestList) {
 
+        Log.d("Callback", "Se activo el callack ");
+        for(Request item : requestList) {
+            Log.d("ID", Integer.toString(item.request_id));
+            Log.d("Name",item.name);
+            Log.d("Quantity", item.quantity);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        /*TessieDesignDB db = Room.databaseBuilder(this, TessieDesignDB.class,"TessieDesignDB")
-                .allowMainThreadQueries().build();*/
+        TessieDesignDB db = Room.databaseBuilder(this, TessieDesignDB.class,"TessieDesignDB")
+                .allowMainThreadQueries().build();
         if(v.getId() == R.id.btnRegister) {
             Request request = new Request();
             request.name = tfName.getText().toString();
             request.size = getChecboxValues();
             request.type = getRadioButtonValues();
+            request.quantity = getQuantityFields();
+            request.image = "jk";
+            request.data = "dsfa";
 
             Log.d("Name", request.name);
             Log.d("Size", request.size);
             Log.d("Type", request.type);
+            Log.d("Quantity", request.quantity);
+
+            db.requestDAO().insertRequest(request);
+            Log.d("Done", "Insercion Realizada");
 
         }
-        //db.requestDAO().insertRequest();
-    }
 
-    private void enableFieldsAfterCheckBox() {
+        if(v.getId() == R.id.btnViewData) {
+            Log.d("DEBUG", "ENTRE A btnViewData");
+           DatabaseTask task = new DatabaseTask(getApplicationContext(), this);
+           task.execute();
+            Log.d("DEBUG", "SALIENDO de btnViewData");
+        }
 
     }
     private String getChecboxValues() {
@@ -174,13 +191,19 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
         return logOfRB_values;
     }
 
-//    private String getQuantityFields() {
-//        String qty1, qty2, qty3, qty4, qty5, qty6, qty7, qty8;
-//        if(!tfQuantity1.getText().toString().equals("")) qty1 =
-//
-//
-//        return  tfQuantity1 + "_" + tfQuantity2
-//    }
+    private String getQuantityFields() {
+        String qty1, qty2, qty3, qty4, qty5, qty6, qty7, qty8;
+        if(!tfQuantity1.getText().toString().equals("")) qty1 = tfQuantity1.getText().toString(); else qty1 = "*";
+        if(!tfQuantity2.getText().toString().equals("")) qty2 = tfQuantity1.getText().toString(); else qty2 = "*";
+        if(!tfQuantity3.getText().toString().equals("")) qty3 = tfQuantity1.getText().toString(); else qty3 = "*";
+        if(!tfQuantity4.getText().toString().equals("")) qty4 = tfQuantity1.getText().toString(); else qty4 = "*";
+        if(!tfQuantity5.getText().toString().equals("")) qty5 = tfQuantity1.getText().toString(); else qty5 = "*";
+        if(!tfQuantity6.getText().toString().equals("")) qty6 = tfQuantity1.getText().toString(); else qty6 = "*";
+        if(!tfQuantity7.getText().toString().equals("")) qty7 = tfQuantity1.getText().toString(); else qty7 = "*";
+        if(!tfQuantity8.getText().toString().equals("")) qty8 = tfQuantity1.getText().toString(); else qty8 = "*";
+
+        return  qty1 + "_" + qty2 + "_" + qty3 + "_" + qty4 + "_" + qty5 + "_" + qty6 + "_" + qty7  + "_" + qty8;
+    }
 
 
     @Override
