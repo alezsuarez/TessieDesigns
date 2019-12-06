@@ -9,8 +9,6 @@ import androidx.room.RoomDatabase;
 
 import java.util.List;
 
-
-
 public class DatabaseTask extends AsyncTask<Void, Void, List<Request>> {
     private  ICallbackReceiverDB receiverCallback;
     private Context context;

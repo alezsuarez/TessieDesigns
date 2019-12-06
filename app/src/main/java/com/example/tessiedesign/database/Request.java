@@ -32,4 +32,7 @@ public class Request {
     @ColumnInfo(name = "data")
     public String data;
 
+    @ColumnInfo(name = "notes")
+    public String notes;
+
 }

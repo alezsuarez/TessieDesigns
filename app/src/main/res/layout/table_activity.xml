@@ -452,14 +452,13 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/et_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Datos"
                     android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/et_extraData"
+                    android:id="@+id/et_data"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="8"
@@ -480,7 +479,7 @@
                     android:text="Notas" />
 
                 <EditText
-                    android:id="@+id/editText21"
+                    android:id="@+id/et_notes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_span="8"

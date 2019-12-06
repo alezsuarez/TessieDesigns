@@ -1,9 +1,9 @@
 package com.example.tessiedesign;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Database;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class TableActivity extends AppCompatActivity implements DatabaseTask.ICallbackReceiverDB, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private EditText tfName, tfQuantity1, tfQuantity2, tfQuantity3, tfQuantity4, tfQuantity5, tfQuantity6, tfQuantity7, tfQuantity8
-            ,tfImage1, tfImage2, tfImage3, tfImage4, tfImage5, tfImage6, tfImage7, tfImage8;
+            ,tfImage1, tfImage2, tfImage3, tfImage4, tfImage5, tfImage6, tfImage7, tfImage8, et_data, et_notes;
 
     private CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8;
     private Button btnRegister, btnViewData;
@@ -101,11 +101,16 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
         tfImage7 = findViewById(R.id.et_image7);
         tfImage8 = findViewById(R.id.et_image8);
 
+        et_data = findViewById(R.id.et_data);
+        et_notes = findViewById(R.id.et_notes);
+
         btnRegister = findViewById(R.id.btnRegister);
         btnViewData = findViewById(R.id.btnViewData);
 
         btnRegister.setOnClickListener(this);
         btnViewData.setOnClickListener(this);
+
+
 
     }
 
@@ -132,24 +137,30 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
             request.size = getChecboxValues();
             request.type = getRadioButtonValues();
             request.quantity = getQuantityFields();
-            request.image = "jk";
-            request.data = "dsfa";
+            request.image = getImageFields();
+            request.data = et_data.getText().toString();
+            request.notes = et_notes.getText().toString();
 
             Log.d("Name", request.name);
             Log.d("Size", request.size);
             Log.d("Type", request.type);
             Log.d("Quantity", request.quantity);
+            Log.d("Data", request.data);
+            Log.d("Notes", request.notes);
 
             db.requestDAO().insertRequest(request);
             Log.d("Done", "Insercion Realizada");
+            Toast.makeText(this, "Pedido Registrado", Toast.LENGTH_SHORT).show();
 
         }
 
         if(v.getId() == R.id.btnViewData) {
-            Log.d("DEBUG", "ENTRE A btnViewData");
-           DatabaseTask task = new DatabaseTask(getApplicationContext(), this);
-           task.execute();
-            Log.d("DEBUG", "SALIENDO de btnViewData");
+//            Log.d("DEBUG", "ENTRE A btnViewData");
+//           DatabaseTask task = new DatabaseTask(getApplicationContext(), this);
+//           task.execute();
+//            Log.d("DEBUG", "SALIENDO de btnViewData");
+            Intent intent = new Intent(this, RequestLogActivity.class);
+            startActivity(intent);
         }
 
     }
@@ -194,15 +205,29 @@ public class TableActivity extends AppCompatActivity implements DatabaseTask.ICa
     private String getQuantityFields() {
         String qty1, qty2, qty3, qty4, qty5, qty6, qty7, qty8;
         if(!tfQuantity1.getText().toString().equals("")) qty1 = tfQuantity1.getText().toString(); else qty1 = "*";
-        if(!tfQuantity2.getText().toString().equals("")) qty2 = tfQuantity1.getText().toString(); else qty2 = "*";
-        if(!tfQuantity3.getText().toString().equals("")) qty3 = tfQuantity1.getText().toString(); else qty3 = "*";
-        if(!tfQuantity4.getText().toString().equals("")) qty4 = tfQuantity1.getText().toString(); else qty4 = "*";
-        if(!tfQuantity5.getText().toString().equals("")) qty5 = tfQuantity1.getText().toString(); else qty5 = "*";
-        if(!tfQuantity6.getText().toString().equals("")) qty6 = tfQuantity1.getText().toString(); else qty6 = "*";
-        if(!tfQuantity7.getText().toString().equals("")) qty7 = tfQuantity1.getText().toString(); else qty7 = "*";
-        if(!tfQuantity8.getText().toString().equals("")) qty8 = tfQuantity1.getText().toString(); else qty8 = "*";
+        if(!tfQuantity2.getText().toString().equals("")) qty2 = tfQuantity2.getText().toString(); else qty2 = "*";
+        if(!tfQuantity3.getText().toString().equals("")) qty3 = tfQuantity3.getText().toString(); else qty3 = "*";
+        if(!tfQuantity4.getText().toString().equals("")) qty4 = tfQuantity4.getText().toString(); else qty4 = "*";
+        if(!tfQuantity5.getText().toString().equals("")) qty5 = tfQuantity5.getText().toString(); else qty5 = "*";
+        if(!tfQuantity6.getText().toString().equals("")) qty6 = tfQuantity6.getText().toString(); else qty6 = "*";
+        if(!tfQuantity7.getText().toString().equals("")) qty7 = tfQuantity7.getText().toString(); else qty7 = "*";
+        if(!tfQuantity8.getText().toString().equals("")) qty8 = tfQuantity8.getText().toString(); else qty8 = "*";
 
         return  qty1 + "_" + qty2 + "_" + qty3 + "_" + qty4 + "_" + qty5 + "_" + qty6 + "_" + qty7  + "_" + qty8;
+    }
+
+    private String getImageFields() {
+        String img1, img2, img3, img4, img5, img6, img7, img8;
+        if(!tfImage1.getText().toString().equals("")) img1 = tfImage1.getText().toString(); else img1 = "*";
+        if(!tfImage2.getText().toString().equals("")) img2 = tfImage2.getText().toString(); else img2 = "*";
+        if(!tfImage3.getText().toString().equals("")) img3 = tfImage3.getText().toString(); else img3 = "*";
+        if(!tfImage4.getText().toString().equals("")) img4 = tfImage4.getText().toString(); else img4 = "*";
+        if(!tfImage5.getText().toString().equals("")) img5 = tfImage5.getText().toString(); else img5 = "*";
+        if(!tfImage6.getText().toString().equals("")) img6 = tfImage6.getText().toString(); else img6 = "*";
+        if(!tfImage7.getText().toString().equals("")) img7 = tfQuantity7.getText().toString(); else img7 = "*";
+        if(!tfQuantity8.getText().toString().equals("")) img8 = tfQuantity8.getText().toString(); else img8 = "*";
+
+        return  img1 + "_" + img2 + "_" + img3 + "_" + img4 + "_" + img5 + "_" + img6 + "_" + img7  + "_" + img8;
     }
 
 
